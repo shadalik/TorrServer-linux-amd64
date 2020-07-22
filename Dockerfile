@@ -1,13 +1,33 @@
-FROM ubuntu:disco
+FROM phusion/baseimage
+LABEL maintainer="Shadalik"
 
-ENV TS_VERSION=1.1.76
+# TorrServer version
+ENV TORRSERVER_VERSION="1.1.76_1"
 
-EXPOSE 8090:8090
+# TorrServer architecture
+ENV TORRSERVER_ARCH="linux-amd64"
+ENV TORRSERVER_FILE="TorrServer-${TORRSERVER_ARCH}"
 
-RUN apt-get update && apt-get install -y wget && \
-    mkdir /torrserver/ && cd /torrserver/ && mkdir /db && \
-    wget -O TorrServer -P /torrserver/ "https://github.com/YouROK/TorrServer/releases/download/$TS_VERSION/TorrServer-linux-amd64" && \
-    chmod +x /torrserver/TorrServer
+# TorrServer release info
+ENV TORRSERVER_RELEASE="https://github.com/shadalik/torrserver-amd64/raw/master/${TORRSERVER_FILE}"
 
-ENTRYPOINT ["/torrserver/TorrServer"]
-CMD ["--path", "/torrserver/db"]
+# TorrServer directory
+ENV TORRSERVER_DIR="/torrserver"
+
+# Torrserver UI port
+ENV TORRSERVER_PORT="8090"
+
+# Download TorrServer binaries
+RUN apt-get update && apt-get install -y wget \
+	&& mkdir -p ${TORRSERVER_DIR} \
+	&& cd ${TORRSERVER_DIR} \
+	&& wget ${TORRSERVER_RELEASE} \
+	&& chmod +x ${TORRSERVER_FILE}
+
+# Expose port
+EXPOSE ${TORRSERVER_PORT}
+
+# Run TorrServer
+WORKDIR ${TORRSERVER_DIR}
+VOLUME ${TORRSERVER_DIR}
+ENTRYPOINT ./${TORRSERVER_FILE}
