@@ -9,7 +9,7 @@ ENV TORRSERVER_ARCH="linux-amd64"
 ENV TORRSERVER_FILE="TorrServer-${TORRSERVER_ARCH}
 
 # TorrServer release info
-ENV TORRSERVER_RELEASE="https://github.com/shadalik/torrserver/releases/download/${TORRSERVER_VERSION}/${TORRSERVER_FILE}"
+ENV TORRSERVER_RELEASE="https://github.com/shadalik/TorrServer-linux-amd64/releases/download/${TORRSERVER_VERSION}/${TORRSERVER_FILE}"
 
 # TorrServer directory
 ENV TORRSERVER_DIR="/torrserver"
