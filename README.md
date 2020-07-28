@@ -8,6 +8,7 @@ docker run -d \
 	-v torrserver-data:/torrserver \
 	--restart always \
 	--name torrserver-amd64 \
+	shadalik/torrserver-amd64
 ```
 
 ## Parameters
